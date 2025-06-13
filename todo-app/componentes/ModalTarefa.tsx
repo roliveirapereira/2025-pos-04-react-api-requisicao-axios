@@ -32,7 +32,7 @@ const ModalTarefa: React.FC<ModalTarefaProps> = ({ onClose, onAdicionarTarefa })
             <h2 className="text-xl font-semibold text-amber-50">Nova Tarefa</h2>
             <button
               onClick={onClose}
-              className="text-amber-50 hover:text-amber-200 focus:outline-none"
+              className="text-amber-50 hover:text-amber-900 focus:outline-none"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -53,7 +53,7 @@ const ModalTarefa: React.FC<ModalTarefaProps> = ({ onClose, onAdicionarTarefa })
                   setNovaTarefa(e.target.value);
                   setErro("");
                 }}
-                className="w-full px-3 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 bg-gray-600 text-amber-50"
+                className="w-full px-3 py-2 border border-white-500 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-950 bg-gray-600 text-amber-50"
                 placeholder="Digite o título da tarefa"
                 autoFocus
               />
@@ -70,7 +70,7 @@ const ModalTarefa: React.FC<ModalTarefaProps> = ({ onClose, onAdicionarTarefa })
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 text-sm font-medium text-gray-900 bg-amber-500 rounded-md hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="px-4 py-2 text-sm font-medium text-white-900 bg-amber-900 rounded-md hover:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-800 transition-all cursor-pointer"
               >
                 Adicionar
               </button>

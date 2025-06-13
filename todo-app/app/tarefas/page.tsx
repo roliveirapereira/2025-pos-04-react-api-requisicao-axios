@@ -75,7 +75,7 @@ const Home = () => {
         <h1 className="text-2xl font-bold text-amber-50">Minhas Tarefas</h1>
         <button
           onClick={() => setMostrarModal(true)}
-          className="px-4 py-2 bg-amber-500 text-gray-900 rounded-md hover:bg-amber-400 font-medium"
+          className="px-4 py-2 bg-amber-900 text-white-900 rounded-md hover:bg-amber-950 transition-all font-medium cursor-pointer"
         >
           Adicionar Tarefa
         </button>
