@@ -1,9 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import dados, { TarefaInterface } from "@/data";
+import type React from "react";
+import Link from "next/link";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Cabecalho from "@/componentes/Cabecalho";
 import ModalTarefa from "@/componentes/ModalTarefa";
+
+interface TarefaInterface {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 interface TarefaProps {
   titulo: string;
@@ -36,11 +45,7 @@ const Tarefa: React.FC<TarefaProps> = ({ titulo, concluido }) => {
   );
 };
 
-interface TareafasProps {
-  dados: TarefaInterface[];
-}
-
-const Tarefas: React.FC<TareafasProps> = ({ dados }) => {
+const Tarefas: React.FC<{ dados: TarefaInterface[] }> = ({ dados }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {dados.map((tarefa) => (
@@ -55,12 +60,25 @@ const Tarefas: React.FC<TareafasProps> = ({ dados }) => {
 };
 
 const Home = () => {
-  const [tarefas, setTarefas] = useState<TarefaInterface[]>(dados);
-  const [mostrarModal, setMostrarModal] = useState(false);
+  const [tarefas, setTarefas] = useState<TarefaInterface[]>([]); // começa vazio
+  const [modalAberto, setModalAberto] = useState(false);
+
+  useEffect(() => {
+    const carregarTarefas = async () => {
+      try {
+        const resposta = await axios.get("https://dummyjson.com/todos");
+        setTarefas(resposta.data.todos);
+      } catch (erro) {
+        console.error("Erro ao carregar tarefas:", erro);
+      }
+    };
+
+    carregarTarefas();
+  }, []);
 
   const adicionarTarefa = (titulo: string) => {
     const novaTarefa: TarefaInterface = {
-      id: Date.now(),
+      id: tarefas.length + 1,
       title: titulo,
       completed: false,
     };
@@ -70,23 +88,23 @@ const Home = () => {
   return (
     <div className="container mx-auto p-4">
       <Cabecalho />
-      
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-amber-50">Minhas Tarefas</h1>
-        <button
-          onClick={() => setMostrarModal(true)}
-          className="px-4 py-2 bg-amber-900 text-white-900 rounded-md hover:bg-amber-950 transition-all font-medium cursor-pointer"
-        >
-          Adicionar Tarefa
-        </button>
-      </div>
-      
+      <Link href="/" className="text-blue-600 hover:underline mt-4 block">
+        Voltar para Home <br /> <br />
+      </Link>
+
+      <button
+        className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
+        onClick={() => setModalAberto(true)}
+      >
+        Nova Tarefa
+      </button>
+
       <Tarefas dados={tarefas} />
 
-      {mostrarModal && (
+      {modalAberto && (
         <ModalTarefa
-          onClose={() => setMostrarModal(false)}
-          onAdicionarTarefa={adicionarTarefa}
+          aoAdicionar={adicionarTarefa}
+          aoFechar={() => setModalAberto(false)}
         />
       )}
     </div>
